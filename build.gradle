@@ -1,0 +1,40 @@
+plugins {
+    id 'com.marklogic.ml-data-hub' version '2.0.6'
+}
+
+task setStagingDatabaseToDigest(type: com.marklogic.gradle.task.MarkLogicTask) {
+    doFirst{
+        def mc = getManageClient()
+        if(mc.getJson("/manage/v2/servers?view=status&group-id=Default").contains('"' + mlFinalAppserverName + '"')) {
+            mc.putJson("/manage/v2/servers/" + mlFinalAppserverName + "/properties?group-id=Default", '{"authentication":"digest", "url-rewriter":"/MarkLogic/rest-api/rewriter.xml"}')
+        }         
+    }
+}
+
+task setStagingDatabaseToApplicationLevel(type: com.marklogic.gradle.task.MarkLogicTask) {
+    doFirst{
+        def mc = getManageClient()
+        if(mc.getJson("/manage/v2/servers?view=status&group-id=Default").contains('"' + mlFinalAppserverName + '"')) {
+            mc.putJson("/manage/v2/servers/" + mlFinalAppserverName + "/properties?group-id=Default", '{"authentication":"application-level","url-rewriter":"/lib/sso/resource-wrapper.xml"}')
+        }         
+    }
+}
+
+task setFinalRewriter(type: com.marklogic.gradle.task.MarkLogicTask){
+	doFirst{
+        def mc = getManageClient()
+        if(mc.getJson("/manage/v2/servers?view=status&group-id=Default").contains('"' + mlFinalAppserverName + '"')) {
+            
+        }         
+    }
+}
+
+task deleteAmp(type: com.marklogic.gradle.task.MarkLogicTask) {
+    doFirst{
+        def mc = getManageClient()
+        mc.delete("/manage/v2/amps/loginExecute?namespace=&document-uri=/lib/sso/loginExecute.sjs")
+    }
+}
+
+mlPrepareRestApiDependencies.dependsOn setStagingDatabaseToDigest
+mlPostDeploy.dependsOn setStagingDatabaseToApplicationLevel

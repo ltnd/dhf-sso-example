@@ -1,0 +1,6 @@
+{
+    "local-name": "loginExecute",
+    "document-uri": "/lib/sso/loginExecute.sjs",
+    "modules-database": "%%mlModulesDbName%%",
+    "role": ["roleSSO"]
+}

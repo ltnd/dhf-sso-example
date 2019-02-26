@@ -1,0 +1,14 @@
+{
+  "role-name": "roleSSO",
+  "description": "privilege to run SSO",
+  "role": [
+    "rest-reader"
+  ],
+  "privilege": [
+    {
+      "privilege-name": "xdmp:login",
+      "action": "http://marklogic.com/xdmp/privileges/xdmp-login",
+      "kind": "execute"
+    }
+  ]
+}

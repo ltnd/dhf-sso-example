@@ -1,0 +1,6 @@
+{
+  "user-name": "userSSO",
+  "description": "default user for SSO",
+  "password": "userSSO",
+  "role": []
+}
